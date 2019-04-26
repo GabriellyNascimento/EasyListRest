@@ -10,10 +10,21 @@ https://woliveiras.com.br/posts/instalando-o-git-windows/
 2. Abra o bash do git dentro do diretorio criado. "Windows. Abra a pasta que você criou, click com o botão direito dentro da pasta e selecione a opção open git-bash here."
 3. Digite o comando git clone https://github.com/YagoLopes/EasyListRest "Será criado um diretorio em sua pasta com o nome de EasyListRest"
 
-# como abrir o projeto no NetBeans
+# Como abrir o projeto no NetBeans
 
 1. Abra o IDE NetBeans navegue até o canto superior esquerdo no menu Arquivo -> Abrir Projeto. "Sera aberto explorador de arquivo do seu sistema operacional."
 2. Dentro do explorador navegue ate a pasta que você criou, execute um clique duplo sobre o projeto de nome EasyListRest. "O NetBeans fará a importação do modulos do seu projeto, Atenção isso pode demorara um pouco fique de olho no canto inferior esquerdo do IDE, pois ele avisará quando terminar de importar."
 
 
-# importando o banco de dados
+# Importando o banco de dados
+
+1. Abra o browser de sua preferencia e acesse o endereço http://localhost/phpmyadmin/  ou  http://127.0.0.1/phpmyadmin/
+2. Efetue o login com seu usuario e senha do MYSQL
+3. Com o loguin já efetuado navegue até o menu lateral esquerdo e selecione a opção Novo BD,  no campo Criar banco de dados digite o nome easylist e selecione a opção criar.
+4. Com o banco já criado, observe que no menu lateral esquerdo aparecerá um bando com o nome de easylist, click sobre ele.
+5. No menu superior central selecione a opção Importar,click sobre o botão escolher arquivo. "Sera aberto explorador de arquivo do seu sistema operacional."
+6. click sobre este link https://drive.google.com/file/d/16YY4_HwsNlNuJGvaVY9WFsKUwagRZK5a/view?usp=sharing "Sera baixado um arquivo .sql na sua pasta de download.
+7. Com o explorador de arquivos aberto, navegue até a pasta de downloads e selecione o arquivo .sql que voce baixou.
+8. Tecle enter ou navegue até o fim da pagina e clique em executar para execuatr o arquivo.
+
+# Alterando o user e senha no arquivo DAO
