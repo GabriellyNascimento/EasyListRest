@@ -5,8 +5,8 @@
  */
 package br.com.easylist.ws;
 
-import br.com.easylist.daos.ListaDAO;
-import br.com.easylist.entidades.Lista;
+import br.com.easylist.daos.ProdutoDAO;
+import br.com.easylist.entidades.Produto;
 import java.sql.SQLException;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -24,22 +24,26 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-@Path("lista")
-public class ListaWS {
+@Path("produto")
+public class ProdutoWS {
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response create(@FormParam("nome") String nome) {
+    public Response create(@FormParam("nome") String nome, @FormParam("valor") String valor, @FormParam("mercado") String mercado , @FormParam("descricao") String descricao, @FormParam("comprovante") String comprovante) {
         try {
             //validar campos obrigatórios
             if (nome.isEmpty()) {
                 return Response.status(Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").encoding("Parâmetros incorretos!").build();//CORS 
             }
             //persistir os dados
-            Lista lista = new Lista();
-            lista.setNome(nome);
-            ListaDAO listaDAO = new ListaDAO();
-            if (listaDAO.save(lista) != 0) {
+            Produto produto = new Produto();
+            produto.setNome(nome);
+            produto.setValor(valor);
+            produto.setMercado(mercado);
+            produto.setDescricao(descricao);
+            produto.setComprovante(comprovante);
+            ProdutoDAO produtoDAO = new ProdutoDAO();
+            if (produtoDAO.save(produto) != 0) {
                 return Response.status(Status.OK).header("Access-Control-Allow-Origin", "*").build();//CORS 
             } else {
                 return Response.status(Status.INTERNAL_SERVER_ERROR).build();
@@ -51,13 +55,13 @@ public class ListaWS {
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response create(Lista lista) {
+    public Response create(Produto produto) {
         try {
             //validar campos obrigatórios
             //persistir os dados
-            ListaDAO listaDAO = new ListaDAO();
-            if (listaDAO.save(lista) != 0) {
-                return Response.status(Status.OK).entity(lista).build();
+            ProdutoDAO produtoDAO = new ProdutoDAO();
+            if (produtoDAO.save(produto) != 0) {
+                return Response.status(Status.OK).entity(produto).build();
             } else {
                 return Response.status(Status.INTERNAL_SERVER_ERROR).build();
             }
@@ -71,10 +75,10 @@ public class ListaWS {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response read(@PathParam("id") int id) {
         try {
-            ListaDAO listaDAO = new ListaDAO();
-            Lista lista = null;
-            if ((lista = listaDAO.select(id)) != null) {
-                return Response.status(Status.OK).entity(lista).build();
+            ProdutoDAO produtoDAO = new ProdutoDAO();
+            Produto produto = null;
+            if ((produto = produtoDAO.select(id)) != null) {
+                return Response.status(Status.OK).entity(produto).build();
             } else {
                 return Response.status(Status.NOT_FOUND).build();
             }
@@ -87,10 +91,10 @@ public class ListaWS {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response reads(@QueryParam("nome") String nome) {
         try {
-            ListaDAO listaDAO = new ListaDAO();
-            List<Lista> listas = listaDAO.selects(nome);
-            //GenericEntity<List<Lista>> entity = new GenericEntity<List<Lista>>(listas) {};
-            return Response.status(Status.OK).header("Access-Control-Allow-Origin", "*").entity(listas).build();
+            ProdutoDAO produtoDAO = new ProdutoDAO();
+            List<Produto> produtos = produtoDAO.selects(nome);
+            //GenericEntity<List<Lista>> entity = new GenericEntity<List<Lista>>(produtos) {};
+            return Response.status(Status.OK).header("Access-Control-Allow-Origin", "*").entity(produtos).build();
         } catch (SQLException ex) {
             return Response.status(Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -98,11 +102,11 @@ public class ListaWS {
 
     @PUT
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response update(Lista lista) {
+    public Response update(Produto produto) {
         try {
-            ListaDAO listaDAO = new ListaDAO();
-            if (listaDAO.update(lista) != 0) {
-                return Response.status(Status.OK).entity(lista).build();
+            ProdutoDAO produtoDAO = new ProdutoDAO();
+            if (produtoDAO.update(produto) != 0) {
+                return Response.status(Status.OK).entity(produto).build();
             } else {
                 return Response.status(Status.NOT_FOUND).build();
             }
@@ -115,10 +119,10 @@ public class ListaWS {
     @Path("{id}")
     public Response delete(@PathParam("id") int id) {
         try {
-            ListaDAO listaDAO = new ListaDAO();
-            Lista lista = null;
-            if ((lista = listaDAO.delete(id)) != null) {
-                return Response.status(Status.OK).entity(lista).build();
+            ProdutoDAO produtoDAO = new ProdutoDAO();
+            Produto produto = null;
+            if ((produto = produtoDAO.delete(id)) != null) {
+                return Response.status(Status.OK).entity(produto).build();
             } else {
                 return Response.status(Status.NOT_FOUND).build();
             }
