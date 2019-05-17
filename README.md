@@ -41,6 +41,6 @@ https://woliveiras.com.br/posts/instalando-o-git-windows/
 
 # Vale resaltar que o projeto não possui interface, por isso o IDE retornara um erro ao buscar a rota no browser.
 
- Se você seguiu  todos os passos com atenção seu servidor já está em execução, basta fazer uma chamada com o metodo POST para o endereço http://localhost/easylist/lista passando no Body da requisição os dados atravez de um JSON. 
+ Se você seguiu  todos os passos com atenção seu servidor já está em execução, basta fazer uma chamada com o metodo POST para o endereço http://localhost:"porta de execução"/EasyListRest/produto passando no Body da requisição os dados atravez de um JSON. 
 
 
