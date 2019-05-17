@@ -46,7 +46,6 @@ public class ProdutoDAO {
     }
 
     public int update(Produto produto) throws SQLException {
-        System.out.println(produto.getId());
         String sql = "UPDATE produto SET  nome = ?, valor = ?, mercado = ?, descricao = ?, comprovante = ? WHERE id = ?";
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setString(1, produto.getNome());
