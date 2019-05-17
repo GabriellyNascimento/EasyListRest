@@ -52,7 +52,7 @@ public class ProdutoWS {
             return Response.status(Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-
+    
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response create(Produto produto) {
@@ -102,8 +102,10 @@ public class ProdutoWS {
 
     @PUT
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response update(Produto produto) {
+    @Path("{id}")
+    public Response update(@PathParam("id") int id,Produto produto) {
         try {
+            produto.setId(id);
             ProdutoDAO produtoDAO = new ProdutoDAO();
             if (produtoDAO.update(produto) != 0) {
                 return Response.status(Status.OK).entity(produto).build();

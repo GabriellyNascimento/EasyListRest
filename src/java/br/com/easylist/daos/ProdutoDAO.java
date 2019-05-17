@@ -21,8 +21,8 @@ public class ProdutoDAO {
 
     private Connection conexao;
     private String url = "jdbc:mysql://localhost/easylist"; //Nome da base de dados
-    private String user = "seuusuario"; //nome do usuário do MySQL
-    private String password = "suasenha"; //senha do MySQL
+    private String user = "root"; //nome do usuário do MySQL
+    private String password = ""; //senha do MySQL
 
     public ProdutoDAO() {
         try {
@@ -46,7 +46,8 @@ public class ProdutoDAO {
     }
 
     public int update(Produto produto) throws SQLException {
-        String sql = "UPDATE produto SET  nome = ?, valor = ?, mercado = ?, descricao = ?, comprovante = ?, WHERE id = ?";
+        System.out.println(produto.getId());
+        String sql = "UPDATE produto SET  nome = ?, valor = ?, mercado = ?, descricao = ?, comprovante = ? WHERE id = ?";
         PreparedStatement preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setString(1, produto.getNome());
         preparedStatement.setString(2, produto.getValor());
