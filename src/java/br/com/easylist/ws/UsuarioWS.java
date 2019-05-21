@@ -5,8 +5,8 @@
  */
 package br.com.easylist.ws;
 
-import br.com.easylist.daos.ProdutoDAO;
-import br.com.easylist.entidades.Produto;
+import br.com.easylist.daos.UsuarioDAO;
+import br.com.easylist.entidades.Usuario;
 import java.sql.SQLException;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -24,26 +24,24 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-@Path("produto")
-public class ProdutoWS {
+@Path("usuario")
+public class UsuarioWS {
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response create(@FormParam("nome") String nome, @FormParam("valor") String valor, @FormParam("mercado") String mercado , @FormParam("descricao") String descricao, @FormParam("comprovante") String comprovante) {
+    public Response create(@FormParam("nome") String nome, @FormParam("email") String email, @FormParam("senha") String senha , @FormParam("descricao") String descricao, @FormParam("comprovante") String comprovante) {
         try {
             //validar campos obrigatórios
             if (nome.isEmpty()) {
                 return Response.status(Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").encoding("Parâmetros incorretos!").build();//CORS 
             }
             //persistir os dados
-            Produto produto = new Produto();
-            produto.setNome(nome);
-            produto.setValor(valor);
-            produto.setMercado(mercado);
-            produto.setDescricao(descricao);
-            produto.setComprovante(comprovante);
-            ProdutoDAO produtoDAO = new ProdutoDAO();
-            if (produtoDAO.save(produto) != 0) {
+            Usuario usuario = new Usuario();
+            usuario.setNome(nome);
+            usuario.setEmail(email);
+            usuario.setSenha(senha);
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            if (usuarioDAO.save(usuario) != 0) {
                 return Response.status(Status.OK).header("Access-Control-Allow-Origin", "*").build();//CORS 
             } else {
                 return Response.status(Status.INTERNAL_SERVER_ERROR).build();
@@ -55,13 +53,13 @@ public class ProdutoWS {
     
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response create(Produto produto) {
+    public Response create(Usuario usuario) {
         try {
             //validar campos obrigatórios
             //persistir os dados
-            ProdutoDAO produtoDAO = new ProdutoDAO();
-            if (produtoDAO.save(produto) != 0) {
-                return Response.status(Status.OK).entity(produto).build();
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            if (usuarioDAO.save(usuario) != 0) {
+                return Response.status(Status.OK).entity(usuario).build();
             } else {
                 return Response.status(Status.INTERNAL_SERVER_ERROR).build();
             }
@@ -75,10 +73,10 @@ public class ProdutoWS {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response read(@PathParam("id") int id) {
         try {
-            ProdutoDAO produtoDAO = new ProdutoDAO();
-            Produto produto = null;
-            if ((produto = produtoDAO.select(id)) != null) {
-                return Response.status(Status.OK).entity(produto).build();
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            Usuario usuario = null;
+            if ((usuario = usuarioDAO.select(id)) != null) {
+                return Response.status(Status.OK).entity(usuario).build();
             } else {
                 return Response.status(Status.NOT_FOUND).build();
             }
@@ -91,10 +89,10 @@ public class ProdutoWS {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response reads(@QueryParam("nome") String nome) {
         try {
-            ProdutoDAO produtoDAO = new ProdutoDAO();
-            List<Produto> produtos = produtoDAO.selects(nome);
-            //GenericEntity<List<Lista>> entity = new GenericEntity<List<Lista>>(produtos) {};
-            return Response.status(Status.OK).header("Access-Control-Allow-Origin", "*").entity(produtos).build();
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            List<Usuario> usuarios = usuarioDAO.selects(nome);
+            //GenericEntity<List<Lista>> entity = new GenericEntity<List<Lista>>(usuarios) {};
+            return Response.status(Status.OK).header("Access-Control-Allow-Origin", "*").entity(usuarios).build();
         } catch (SQLException ex) {
             return Response.status(Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -103,12 +101,12 @@ public class ProdutoWS {
     @PUT
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("{id}")
-    public Response update(@PathParam("id") int id,Produto produto) {
+    public Response update(@PathParam("id") int id,Usuario usuario) {
         try {
-            produto.setId(id);
-            ProdutoDAO produtoDAO = new ProdutoDAO();
-            if (produtoDAO.update(produto) != 0) {
-                return Response.status(Status.OK).entity(produto).build();
+            usuario.setId(id);
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            if (usuarioDAO.update(usuario) != 0) {
+                return Response.status(Status.OK).entity(usuario).build();
             } else {
                 return Response.status(Status.NOT_FOUND).build();
             }
@@ -121,10 +119,10 @@ public class ProdutoWS {
     @Path("{id}")
     public Response delete(@PathParam("id") int id) {
         try {
-            ProdutoDAO produtoDAO = new ProdutoDAO();
-            Produto produto = null;
-            if ((produto = produtoDAO.delete(id)) != null) {
-                return Response.status(Status.OK).entity(produto).build();
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            Usuario usuario = null;
+            if ((usuario = usuarioDAO.delete(id)) != null) {
+                return Response.status(Status.OK).entity(usuario).build();
             } else {
                 return Response.status(Status.NOT_FOUND).build();
             }
