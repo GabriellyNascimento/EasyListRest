@@ -52,7 +52,8 @@ public class UsuarioWS {
     }
     
     @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
     public Response create(Usuario usuario) {
         try {
             //validar campos obrigatórios
@@ -70,7 +71,7 @@ public class UsuarioWS {
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
     public Response read(@PathParam("id") int id) {
         try {
             UsuarioDAO usuarioDAO = new UsuarioDAO();
@@ -86,7 +87,7 @@ public class UsuarioWS {
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
     public Response reads(@QueryParam("nome") String nome) {
         try {
             UsuarioDAO usuarioDAO = new UsuarioDAO();
@@ -99,7 +100,8 @@ public class UsuarioWS {
     }
 
     @PUT
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
     @Path("{id}")
     public Response update(@PathParam("id") int id,Usuario usuario) {
         try {
@@ -116,6 +118,7 @@ public class UsuarioWS {
     }
 
     @DELETE
+    @Produces({ MediaType.APPLICATION_JSON})
     @Path("{id}")
     public Response delete(@PathParam("id") int id) {
         try {

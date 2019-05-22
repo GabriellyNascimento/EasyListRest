@@ -34,12 +34,13 @@ public class UsuarioDAO {
     }
 
     public int save(Usuario usuario) throws SQLException {
-        String sql = "INSERT INTO usuario VALUES (null,?,?,?)";
+        String sql = "INSERT INTO usuario VALUES (null,?,?,?,?)";
         PreparedStatement preparedStatement;
         preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setString(1, usuario.getNome());
         preparedStatement.setString(2, usuario.getEmail());
         preparedStatement.setString(3, usuario.getSenha());
+        preparedStatement.setBoolean(4, usuario.isInativo());
        
         return preparedStatement.executeUpdate();
     }
@@ -102,9 +103,11 @@ public class UsuarioDAO {
     public Usuario delete(int id) throws SQLException {
         Usuario usuario = this.select(id);
         if (usuario != null) {
-            String sql = "DELETE FROM usuario WHERE id = ?";
+            //inativa usuario
+            String sql = "UPDATE usuario SET  inativo = ? WHERE id = ?";
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setInt(2, id);
             preparedStatement.execute();
             return usuario;
         } else {

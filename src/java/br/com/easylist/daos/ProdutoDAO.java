@@ -34,7 +34,7 @@ public class ProdutoDAO {
     }
 
     public int save(Produto produto) throws SQLException {
-        String sql = "INSERT INTO produto VALUES (null,?,?,?,?,?)";
+        String sql = "INSERT INTO produto VALUES (null,?,?,?,?,?,?,?)";
         PreparedStatement preparedStatement;
         preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setString(1, produto.getNome());
@@ -42,6 +42,8 @@ public class ProdutoDAO {
         preparedStatement.setString(3, produto.getMercado());
         preparedStatement.setString(4, produto.getDescricao());
         preparedStatement.setString(5, produto.getComprovante());
+        preparedStatement.setInt(6, produto.getListaID());
+        preparedStatement.setBoolean(7, produto.isInativo());
         return preparedStatement.executeUpdate();
     }
 
@@ -105,9 +107,11 @@ public class ProdutoDAO {
     public Produto delete(int id) throws SQLException {
         Produto produto = this.select(id);
         if (produto != null) {
-            String sql = "DELETE FROM produto WHERE id = ?";
+            //inativa produto
+             String sql = "UPDATE produto SET  inativo = ? WHERE id = ?";
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setInt(2, id);
             preparedStatement.execute();
             return produto;
         } else {

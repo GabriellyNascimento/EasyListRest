@@ -29,7 +29,7 @@ public class ListaWS {
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response create(@FormParam("nome") String nome, @FormParam("valor") String valor, @FormParam("mercado") String mercado , @FormParam("descricao") String descricao, @FormParam("comprovante") String comprovante) {
+    public Response create(@FormParam("nome") String nome, @FormParam("usuarioID") String usuarioID) {
         try {
             //validar campos obrigatórios
             if (nome.isEmpty()) {
@@ -38,6 +38,8 @@ public class ListaWS {
             //persistir os dados
             Lista lista = new Lista();
             lista.setNome(nome);
+            lista.setUsuarioID(Integer.parseInt(usuarioID));
+            lista.setInativo(false);
             ListaDAO listaDAO = new ListaDAO();
             if (listaDAO.save(lista) != 0) {
                 return Response.status(Status.OK).header("Access-Control-Allow-Origin", "*").build();//CORS 
@@ -50,7 +52,8 @@ public class ListaWS {
     }
     
     @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Response create(Lista lista) {
         try {
             //validar campos obrigatórios
@@ -65,10 +68,12 @@ public class ListaWS {
             return Response.status(Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-
+    
+    
     @GET
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response read(@PathParam("id") int id) {
         try {
             ListaDAO listaDAO = new ListaDAO();
@@ -84,7 +89,7 @@ public class ListaWS {
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Response reads(@QueryParam("nome") String nome) {
         try {
             ListaDAO listaDAO = new ListaDAO();
@@ -97,7 +102,8 @@ public class ListaWS {
     }
 
     @PUT
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     @Path("{id}")
     public Response update(@PathParam("id") int id,Lista lista) {
         try {
@@ -114,6 +120,7 @@ public class ListaWS {
     }
 
     @DELETE
+    @Produces({MediaType.APPLICATION_JSON})
     @Path("{id}")
     public Response delete(@PathParam("id") int id) {
         try {

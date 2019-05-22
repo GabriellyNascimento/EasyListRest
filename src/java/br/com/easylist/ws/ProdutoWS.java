@@ -29,7 +29,7 @@ public class ProdutoWS {
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response create(@FormParam("nome") String nome, @FormParam("valor") String valor, @FormParam("mercado") String mercado , @FormParam("descricao") String descricao, @FormParam("comprovante") String comprovante) {
+    public Response create(@FormParam("nome") String nome, @FormParam("valor") String valor, @FormParam("mercado") String mercado , @FormParam("descricao") String descricao, @FormParam("comprovante") String comprovante, @FormParam("listaid") String listaid) {
         try {
             //validar campos obrigatórios
             if (nome.isEmpty()) {
@@ -42,6 +42,7 @@ public class ProdutoWS {
             produto.setMercado(mercado);
             produto.setDescricao(descricao);
             produto.setComprovante(comprovante);
+            produto.setListaID(Integer.parseInt(listaid));
             ProdutoDAO produtoDAO = new ProdutoDAO();
             if (produtoDAO.save(produto) != 0) {
                 return Response.status(Status.OK).header("Access-Control-Allow-Origin", "*").build();//CORS 
@@ -54,7 +55,8 @@ public class ProdutoWS {
     }
     
     @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
     public Response create(Produto produto) {
         try {
             //validar campos obrigatórios
@@ -72,7 +74,7 @@ public class ProdutoWS {
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
     public Response read(@PathParam("id") int id) {
         try {
             ProdutoDAO produtoDAO = new ProdutoDAO();
@@ -88,7 +90,7 @@ public class ProdutoWS {
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
     public Response reads(@QueryParam("nome") String nome) {
         try {
             ProdutoDAO produtoDAO = new ProdutoDAO();
@@ -101,7 +103,8 @@ public class ProdutoWS {
     }
 
     @PUT
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
     @Path("{id}")
     public Response update(@PathParam("id") int id,Produto produto) {
         try {
@@ -118,6 +121,7 @@ public class ProdutoWS {
     }
 
     @DELETE
+    @Produces({ MediaType.APPLICATION_JSON})
     @Path("{id}")
     public Response delete(@PathParam("id") int id) {
         try {

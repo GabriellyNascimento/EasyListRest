@@ -17,6 +17,8 @@ public class Produto implements Serializable {
     private String mercado;
     private String descricao;
     private String comprovante;
+    private int listaID;
+    private boolean inativo;
 
     /**
      * @return the id
@@ -100,6 +102,34 @@ public class Produto implements Serializable {
      */
     public void setComprovante(String comprovante) {
         this.comprovante = comprovante;
+    }
+
+    /**
+     * @return the listaID
+     */
+    public int getListaID() {
+        return listaID;
+    }
+
+    /**
+     * @param listaID the listaID to set
+     */
+    public void setListaID(int listaID) {
+        this.listaID = listaID;
+    }
+
+    /**
+     * @return the inativo
+     */
+    public boolean isInativo() {
+        return inativo;
+    }
+
+    /**
+     * @param inativo the inativo to set
+     */
+    public void setInativo(boolean inativo) {
+        this.inativo = inativo;
     }
 
 }

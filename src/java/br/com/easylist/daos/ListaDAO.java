@@ -34,10 +34,12 @@ public class ListaDAO {
     }
 
     public int save(Lista lista) throws SQLException {
-        String sql = "INSERT INTO lista VALUES (null,?)";
+        String sql = "INSERT INTO lista VALUES (null,?,?,?)";
         PreparedStatement preparedStatement;
         preparedStatement = conexao.prepareStatement(sql);
         preparedStatement.setString(1, lista.getNome());
+        preparedStatement.setInt(2, lista.getUsuarioID());
+        preparedStatement.setBoolean(3, lista.isInativo());
         return preparedStatement.executeUpdate();
     }
 
@@ -97,9 +99,11 @@ public class ListaDAO {
     public Lista delete(int id) throws SQLException {
         Lista lista = this.select(id);
         if (lista != null) {
-            String sql = "DELETE FROM lista WHERE id = ?";
+            //inativa lista
+            String sql = "UPDATE lista SET  inativo = ? WHERE id = ?";
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setInt(2, id);
             preparedStatement.execute();
             return lista;
         } else {

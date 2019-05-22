@@ -15,6 +15,7 @@ public class Usuario implements Serializable {
     private String nome;
     private String email;
     private String senha;
+    private boolean inativo;
 
     /**
      * @return the id
@@ -70,6 +71,20 @@ public class Usuario implements Serializable {
      */
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    /**
+     * @return the inativo
+     */
+    public boolean isInativo() {
+        return inativo;
+    }
+
+    /**
+     * @param inativo the inativo to set
+     */
+    public void setInativo(boolean inativo) {
+        this.inativo = inativo;
     }
    
 

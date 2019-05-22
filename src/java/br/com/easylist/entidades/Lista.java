@@ -13,6 +13,8 @@ public class Lista implements Serializable {
 
     private int id;
     private String nome;
+    private int usuarioID;
+    private boolean inativo;
 
     /**
      * @return the id
@@ -41,4 +43,37 @@ public class Lista implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    /**
+     * @return the usuarioID
+     */
+    public int getUsuarioID() {
+        return usuarioID;
+    }
+
+    /**
+     * @param usuarioID the usuarioID to set
+     */
+    public void setUsuarioID(int usuarioID) {
+        this.usuarioID = usuarioID;
+    }
+
+    /**
+     * @return the inativo
+     */
+    public boolean isInativo() {
+        return inativo;
+    }
+
+    /**
+     * @param inativo the inativo to set
+     */
+    public void setInativo(boolean inativo) {
+        this.inativo = inativo;
+    }
+
+   
+
+  
+   
 }
